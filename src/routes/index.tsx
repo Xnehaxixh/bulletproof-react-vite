@@ -7,9 +7,10 @@ const getRoutes = (): RouteObject[] => {
 };
 
 const AppRoutes = () => {
-  const common: RouteObject[] = [{ path: '/todos/*', element: <ToDosRoutes /> }];
+  const root: RouteObject[] = [{ path: '/', element: <ToDosRoutes /> }];
+  const todos: RouteObject[] = [{ path: '/todos/*', element: <ToDosRoutes /> }];
 
-  const element = useRoutes([...common]);
+  const element = useRoutes([...root, ...todos]);
 
   return <>{element}</>;
 };
