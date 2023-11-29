@@ -14,7 +14,10 @@
     "test": "vitest",
     "test:coverage": "vitest run --coverage",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build -o ./build/storybook"
+    "build-storybook": "storybook build -o ./build/storybook",
+    "commit": "git-cz",
+    "commit:retry": "git-cz --retry",
+    "commit:noverify": "git-cz --no-verify"
   },
   "dependencies": {
     "@mswjs/data": "^0.16.0",
@@ -52,6 +55,8 @@
     "@vitejs/plugin-react": "^4.2.0",
     "@vitest/coverage-istanbul": "^0.34.6",
     "autoprefixer": "^10.4.16",
+    "commitlint-config-gitmoji": "^2.3.1",
+    "cz-emoji-conventional-message": "^1.0.2",
     "eslint": "^8.54.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-import-resolver-typescript": "^3.6.1",
@@ -76,6 +81,11 @@
     "vite-plugin-eslint": "^1.8.1",
     "vite-tsconfig-paths": "^4.2.1",
     "vitest": "^0.34.6"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-emoji-conventional-message"
+    }
   },
   "lint-staged": {
     "*.+(ts|tsx)": [
