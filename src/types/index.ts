@@ -1,2 +1,2 @@
-export * from './BaseEntity';
-export * from './ListResponse';
+export * from '@/types/BaseEntity';
+export * from '@/types/ListResponse';

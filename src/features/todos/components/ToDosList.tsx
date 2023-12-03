@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { TodoEntity } from '@/features/todos';
+import { TodoEntity } from '@/features/todos/types';
 
 type ToDoItemProps = {
-  data: TodoEntity;
+  readonly data: TodoEntity;
 };
 
 const ToDoItem: React.FC<ToDoItemProps> = ({ data: { id, name, completed } }) => {
@@ -18,7 +18,7 @@ const ToDoItem: React.FC<ToDoItemProps> = ({ data: { id, name, completed } }) =>
   );
 };
 
-const ToDosList: React.FC<{ items: TodoEntity[] }> = ({ items }) => {
+const ToDosList: React.FC<{ readonly items: TodoEntity[] }> = ({ items }) => {
   return (
     <div>
       {items.map((item) => (

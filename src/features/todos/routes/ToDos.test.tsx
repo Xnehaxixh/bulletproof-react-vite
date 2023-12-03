@@ -2,6 +2,7 @@ import { screen } from '@testing-library/react';
 import { describe, expect } from 'vitest';
 
 import { renderTest } from '@/__tests__/renderTest';
+
 describe('Todos Route', () => {
   it('should render successfully', async () => {
     renderTest({ currentUrl: '/todos' });
