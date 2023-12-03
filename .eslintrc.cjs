@@ -3,6 +3,7 @@ module.exports = {
   env: {
     node: true,
     es2021: true,
+    jest: true,
   },
   parserOptions: { ecmaVersion: 2021, sourceType: 'module' },
   ignorePatterns: ['node_modules/*'],
@@ -25,41 +26,98 @@ module.exports = {
         node: true,
         es2021: true,
       },
-      extends: [
-        'eslint:recommended',
-        'plugin:import/errors',
-        'plugin:import/warnings',
-        'plugin:import/typescript',
-        'plugin:@typescript-eslint/recommended',
-        'plugin:react/recommended',
-        "plugin:react-hooks/recommended",
-        'plugin:jsx-a11y/recommended',
-        'plugin:storybook/recommended',
-        'plugin:prettier/recommended',
+      extends: ['eslint:recommended', '@strv/react', '@strv/react/optional'],
+      plugins: [
+        'import',
+        'react',
+        'react-hooks',
+        'jsx-a11y',
+        'storybook',
+        'prettier',
+        'sonarjs',
+        '@typescript-eslint',
+        '@dword-design/import-alias',
+        '@stylistic',
       ],
       rules: {
-
+        // Organizing imports
         'import/order': [
           'error',
           {
-            groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index', 'object'],
+            groups: [
+              'builtin',
+              'external',
+              'internal',
+              'parent',
+              'sibling',
+              'index',
+              'object',
+              'type',
+            ],
             'newlines-between': 'always',
+            pathGroups: [
+              {
+                pattern: '@/**',
+                group: 'internal',
+                position: 'after',
+              },
+            ],
             alphabetize: { order: 'asc', caseInsensitive: true },
           },
         ],
-        'import/default': 'off',
-        'import/no-named-as-default-member': 'off',
-        'import/no-named-as-default': 'off',
+        // Enforcing import aliases
+        '@dword-design/import-alias/prefer-alias': [
+          'error',
+          {
+            alias: {
+              '@/': 'src/',
+            },
+          },
+        ],
+        'no-restricted-imports': [
+          'error',
+          {
+            patterns: ['.*', 'src/*'],
+          },
+        ],
 
-        'react/prop-types': 'off',
+        // Turning off these rules as TypeScript supports the new JSX transform in v4.1 and up
+        // https://legacy.reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html#eslint
+        'react/jsx-uses-react': 'off',
         'react/react-in-jsx-scope': 'off',
-        'jsx-a11y/anchor-is-valid': 'off',
 
-        '@typescript-eslint/no-unused-vars': ['error'],
-        '@typescript-eslint/explicit-function-return-type': ['off'],
-        '@typescript-eslint/explicit-module-boundary-types': ['off'],
-        '@typescript-eslint/no-empty-function': ['off'],
-        '@typescript-eslint/no-explicit-any': ['off'],
+        // Enforcing explicit types for function return values and arguments
+        '@typescript-eslint/explicit-function-return-type': 'error',
+        '@typescript-eslint/explicit-module-boundary-types': 'error',
+        '@typescript-eslint/no-explicit-any': 'error',
+
+        // Enforcing readable formatting rules
+        'prefer-destructuring': ['error'],
+        'padding-line-between-statements': [
+          'error',
+          { blankLine: 'always', prev: '*', next: 'export' },
+          { blankLine: 'never', prev: 'export', next: 'export' },
+
+          { blankLine: 'always', prev: '*', next: 'return' },
+          { blankLine: 'always', prev: '*', next: 'function' },
+          { blankLine: 'always', prev: '*', next: 'switch' },
+          { blankLine: 'always', prev: '*', next: 'if' },
+          { blankLine: 'always', prev: '*', next: 'for' },
+          { blankLine: 'always', prev: '*', next: 'while' },
+          { blankLine: 'always', prev: '*', next: 'do' },
+          { blankLine: 'always', prev: '*', next: 'try' },
+          { blankLine: 'always', prev: '*', next: 'class' },
+          { blankLine: 'always', prev: '*', next: 'block-like' },
+          { blankLine: 'always', prev: '*', next: 'block' },
+          { blankLine: 'always', prev: '*', next: 'multiline-expression' },
+          { blankLine: 'always', prev: '*', next: 'multiline-const' },
+          { blankLine: 'always', prev: '*', next: 'multiline-let' },
+          { blankLine: 'always', prev: '*', next: 'multiline-block-like' },
+        ],
+
+        // Misc.
+        "no-shadow": "off",
+        "@typescript-eslint/no-shadow": "warn",
 
         'prettier/prettier': ['error', {}, { usePrettierrc: true }],
       },
