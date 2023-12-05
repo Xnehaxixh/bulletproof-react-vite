@@ -1,4 +1,4 @@
-import { BaseEntity } from '@/types';
+import type { BaseEntity } from '@/types';
 
 type TodoEntity = {
   completed: boolean;

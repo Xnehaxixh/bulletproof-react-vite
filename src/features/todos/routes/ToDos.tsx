@@ -1,8 +1,7 @@
 import React from 'react';
 
+import { useTodos } from '@/features/todos/api/getTodos';
 import { ToDosList } from '@/features/todos/components/ToDosList';
-
-import { useTodos } from '../api/getTodos';
 
 export const ToDos: React.FC = () => {
   const { data } = useTodos();

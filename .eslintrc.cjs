@@ -3,6 +3,7 @@ module.exports = {
   env: {
     node: true,
     es2021: true,
+    jest: true,
   },
   parserOptions: { ecmaVersion: 2021, sourceType: 'module' },
   ignorePatterns: ['node_modules/*'],
@@ -16,50 +17,86 @@ module.exports = {
         'import/resolver': {
           typescript: {},
         },
-        'import/parsers': {
-          '@typescript-eslint/parser': ['.ts', '.tsx'],
-        },
       },
       env: {
         browser: true,
         node: true,
         es2021: true,
       },
-      extends: [
-        'eslint:recommended',
-        'plugin:import/errors',
-        'plugin:import/warnings',
-        'plugin:import/typescript',
-        'plugin:@typescript-eslint/recommended',
-        'plugin:react/recommended',
-        "plugin:react-hooks/recommended",
-        'plugin:jsx-a11y/recommended',
-        'plugin:storybook/recommended',
-        'plugin:prettier/recommended',
+      extends: ['eslint:recommended', 'alloy', 'alloy/react', 'alloy/typescript'],
+      plugins: [
+        'import',
+        'jest',
+        'react',
+        'react-hooks',
+        'jsx-a11y',
+        'storybook',
+        'prettier',
+        'sonarjs',
+        '@typescript-eslint',
+        '@limegrass/import-alias',
+        '@stylistic',
       ],
       rules: {
-
+        // Organizing imports
         'import/order': [
           'error',
           {
-            groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index', 'object'],
+            groups: [
+              'builtin',
+              'external',
+              'internal',
+              'parent',
+              'sibling',
+              'index',
+              'object',
+              'type',
+            ],
             'newlines-between': 'always',
+            pathGroups: [
+              {
+                pattern: '@/**',
+                group: 'internal',
+                position: 'after',
+              },
+            ],
             alphabetize: { order: 'asc', caseInsensitive: true },
           },
         ],
-        'import/default': 'off',
-        'import/no-named-as-default-member': 'off',
-        'import/no-named-as-default': 'off',
+        // Enforcing import aliases
+        '@limegrass/import-alias/import-alias': 'error',
+        'no-restricted-imports': [
+          'error',
+          {
+            patterns: ['src/*'],
+          },
+        ],
 
-        'react/prop-types': 'off',
-        'react/react-in-jsx-scope': 'off',
-        'jsx-a11y/anchor-is-valid': 'off',
+        // Enforcing readable formatting rules
+        'prefer-destructuring': ['error'],
+        'padding-line-between-statements': [
+          'error',
 
-        '@typescript-eslint/no-unused-vars': ['error'],
-        '@typescript-eslint/explicit-function-return-type': ['off'],
-        '@typescript-eslint/explicit-module-boundary-types': ['off'],
-        '@typescript-eslint/no-empty-function': ['off'],
-        '@typescript-eslint/no-explicit-any': ['off'],
+          // After directives (like 'use-strict'), except between directives
+          { blankLine: 'always', prev: 'directive', next: '*' },
+          { blankLine: 'any', prev: 'directive', next: 'directive' },
+
+          // After imports, except between imports
+          { blankLine: 'always', prev: 'import', next: '*' },
+          { blankLine: 'any', prev: 'import', next: 'import' },
+
+          // Before and after every sequence of variable declarations
+          { blankLine: 'always', prev: '*', next: ['const', 'let', 'var'] },
+          { blankLine: 'always', prev: ['const', 'let', 'var'], next: '*' },
+          { blankLine: 'any', prev: ['const', 'let', 'var'], next: ['const', 'let', 'var'] },
+
+          // Before and after class declaration, if, while, switch, try
+          { blankLine: 'always', prev: '*', next: ['class', 'if', 'while', 'switch', 'try'] },
+          { blankLine: 'always', prev: ['class', 'if', 'while', 'switch', 'try'], next: '*' },
+
+          // Before return statements
+          { blankLine: 'always', prev: '*', next: 'return' },
+        ],
 
         'prettier/prettier': ['error', {}, { usePrettierrc: true }],
       },

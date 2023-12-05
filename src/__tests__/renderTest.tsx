@@ -5,10 +5,11 @@ import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { queryClient } from '@/lib';
 import { getRoutes } from '@/routes';
 
-type TestParams = {
+interface TestParams {
   currentUrl: string;
-};
-const renderTest = ({ currentUrl }: TestParams) => {
+}
+
+const renderTest = ({ currentUrl }: TestParams): ReturnType<typeof render> => {
   const router = createMemoryRouter(getRoutes(), { initialEntries: [currentUrl] });
 
   return render(

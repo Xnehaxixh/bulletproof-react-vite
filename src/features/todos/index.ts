@@ -1,2 +1,2 @@
-export * from './types';
-export * from './routes';
+export * from '@/features/todos/types';
+export * from '@/features/todos/routes';
