@@ -1,6 +1,6 @@
-type ListResponse<T> = {
+interface ListResponse<T> {
   count: number;
   data: T[];
-};
+}
 
 export type { ListResponse };

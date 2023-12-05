@@ -1,3 +1,4 @@
+/* eslint-disable @limegrass/import-alias/import-alias */
 import 'tailwindcss/tailwind.css';
 import { initialize, mswDecorator } from 'msw-storybook-addon';
 

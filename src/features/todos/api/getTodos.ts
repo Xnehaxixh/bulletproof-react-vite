@@ -1,7 +1,9 @@
-import { UseQueryResult, useQuery } from 'react-query';
+import { useQuery } from 'react-query';
 
-import { TodoEntity } from '@/features/todos/types';
+import type { TodoEntity } from '@/features/todos/types';
 import { axios } from '@/lib';
+
+import type { UseQueryResult } from 'react-query';
 
 const TODOS_QUERY_KEY = ['todos'];
 

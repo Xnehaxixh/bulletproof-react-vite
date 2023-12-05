@@ -1,7 +1,8 @@
-import React from 'react';
-import { RouteObject, useRoutes } from 'react-router-dom';
+import { useRoutes } from 'react-router-dom';
 
 import { ToDosRoutes } from '@/features/todos';
+
+import type { RouteObject } from 'react-router-dom';
 
 const getRoutes = (): RouteObject[] => {
   return [{ path: '/todos/*', element: <ToDosRoutes /> }];

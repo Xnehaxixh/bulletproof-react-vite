@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker';
 
-import { TodoEntity } from '@/features/todos';
+import type { TodoEntity } from '@/features/todos';
 
 type Overrides = Record<string, unknown>;
 
